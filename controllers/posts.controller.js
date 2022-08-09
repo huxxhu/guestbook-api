@@ -4,7 +4,7 @@ const { asyncError, appError } = require("../services/error.service");
 
 module.exports = {
   getPosts: async (req, res, next) => {
-    const post = await Post.find().sort("createdAt");
+    const post = await Post.find().sort({ createdAt: -1 });
     resSuccess({ res, post });
   },
   addPost: asyncError(async (req, res, next) => {
