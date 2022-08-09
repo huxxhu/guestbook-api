@@ -1,14 +1,15 @@
 const Post = require("../models/posts.model");
-const success = require("../services/success.service");
+const resSuccess = require("../services/success.service");
 const { asyncError, appError } = require("../services/error.service");
 
 module.exports = {
   getPosts: async (req, res, next) => {
     const post = await Post.find().sort("createdAt");
-    success({ res, post });
+    resSuccess({ res, post });
   },
   addPost: asyncError(async (req, res, next) => {
     const { name, content } = req.body;
+
     if (!name || name.trim() === "") {
       return appError(400, "Please enter `name`.", next);
     }
@@ -20,6 +21,6 @@ module.exports = {
       content,
     });
 
-    success({ res, newPost });
+    resSuccess({ res, newPost });
   }),
 };

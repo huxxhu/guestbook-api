@@ -1,4 +1,4 @@
-const successHandler = ({ res, data, statusCode = 200, ...rest }) => {
+const resSuccess = ({ res, data, statusCode = 200, ...rest }) => {
   res.status(statusCode);
   res.send({
     status: "success",
@@ -7,4 +7,4 @@ const successHandler = ({ res, data, statusCode = 200, ...rest }) => {
   });
 };
 
-module.exports = successHandler;
+module.exports = resSuccess;
