@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const { resError } = require("./services/error.service");
 
 const postsRouter = require("./routes/posts.route");
 const usersRouter = require("./routes/users.route");
@@ -12,6 +13,8 @@ require("dotenv").config();
 require("./services/db.service.js");
 
 app.use(cors());
+// TODO: Security
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,6 +30,11 @@ app.use((req, res) => {
     status: "error",
     message: "😵 404 not found.",
   });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  resError(err, res);
 });
 
 module.exports = app;
