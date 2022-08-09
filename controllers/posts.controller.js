@@ -8,7 +8,10 @@ module.exports = {
     resSuccess({ res, post });
   },
   addPost: asyncError(async (req, res, next) => {
-    const { name, content } = req.body;
+    const {
+      ip,
+      body: { name, content },
+    } = req;
 
     if (!name || name.trim() === "") {
       return appError(400, "Please enter `name`.", next);
@@ -19,6 +22,7 @@ module.exports = {
     const newPost = await Post.create({
       name,
       content,
+      ip,
     });
 
     resSuccess({ res, newPost });

@@ -15,6 +15,9 @@ const schema = new Schema(
       type: Date,
       default: Date.now,
     },
+    ip: {
+      type: String,
+    },
     user: {
       type: Schema.ObjectId,
       ref: "user",
