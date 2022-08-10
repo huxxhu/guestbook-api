@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const helmet = require("helmet");
 const { resError } = require("./services/error.service");
 
 const postsRouter = require("./routes/posts.route");
@@ -13,7 +14,11 @@ require("dotenv").config();
 require("./services/db.service.js");
 
 app.use(cors());
-// TODO: Security
+
+// Security
+if (process.env.NODE_ENV === "production") {
+  app.use(helmet());
+}
 
 app.use(logger("dev"));
 app.use(express.json());
