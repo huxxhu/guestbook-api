@@ -13,6 +13,7 @@ const app = express();
 require("dotenv").config();
 require("./services/db.service.js");
 
+app.set("trust proxy", true);
 app.use(cors());
 
 // Security
