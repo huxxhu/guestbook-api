@@ -13,8 +13,24 @@ const app = express();
 require("dotenv").config();
 require("./services/db.service.js");
 
+const whitelist = [
+  process.env.REACT_APP_LOCAL_URL,
+  process.env.REACT_APP_PROD_URL,
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log(`🚷 CORS block origin: ${origin} is trying to connect.`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
 app.set("trust proxy", true);
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Security
 if (process.env.NODE_ENV === "production") {
