@@ -6,8 +6,6 @@ const helmet = require("helmet");
 const { resError } = require("./services/error.service");
 
 const routes = require("./routes");
-const postsRouter = require("./routes/posts.route");
-const usersRouter = require("./routes/users.route");
 
 const app = express();
 
@@ -45,8 +43,6 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/", routes);
-app.use(postsRouter);
-app.use(usersRouter);
 
 // Path not found
 app.use((req, res) => {
