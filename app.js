@@ -5,6 +5,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { resError } = require("./services/error.service");
 
+const routes = require("./routes");
 const postsRouter = require("./routes/posts.route");
 const usersRouter = require("./routes/users.route");
 
@@ -43,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Routes
+app.use("/api/", routes);
 app.use(postsRouter);
 app.use(usersRouter);
 
