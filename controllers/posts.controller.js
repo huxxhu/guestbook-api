@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Post = require("../models/posts.model");
 const resSuccess = require("../services/success.service");
 const { asyncError, appError } = require("../services/error.service");
@@ -52,6 +53,34 @@ module.exports = {
       content,
       ip,
     });
+
+    resSuccess({ res, data: newPost });
+  }),
+  // Reply
+  replyPost: asyncError(async (req, res, next) => {
+    const {
+      params: { id },
+      body: { content },
+    } = req;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return appError(400, "POST ID is invalid", next);
+    }
+
+    if (!content || content.trim() === "") {
+      return appError(400, "Please enter `content`.", next);
+    }
+
+    const newPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        reply: {
+          content,
+          createdAt: Date.now(),
+        },
+      },
+      { new: true, runValidators: true }
+    );
 
     resSuccess({ res, data: newPost });
   }),
