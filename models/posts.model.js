@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
-const schema = new Schema(
+const schema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -19,8 +18,16 @@ const schema = new Schema(
       type: String,
     },
     user: {
-      type: Schema.ObjectId,
-      ref: "user",
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    },
+    reply: {
+      content: {
+        type: String,
+      },
+      createdAt: {
+        type: Date,
+      },
     },
   },
   {
